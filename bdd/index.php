@@ -1,26 +1,36 @@
 <?php
-// sqlite3 db.sqlite 
-$pdo=new PDO('sqlite:db.sqlite');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// insertion 
-// $nbRows = $pdo->exec("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (1, 'test', 25, 'Texas', 15000.00 );");
+require 'Classes/autoloader.php'; 
+Autoloader::register();
 
+use Form\Type\QuestionFactory;
 
+// Charger le fichier JSON
+$jsonData = file_get_contents('q.json');
+$questionsData = json_decode($jsonData, true);
 
+// Tableau pour stocker les instances de questions
+$questions = [];
 
-foreach ($rows as $row) {
-    echo $row['ID'] . "\n";
-    echo $row['NAME'] . "\n";
-    echo $row['AGE'] . "\n";
-    echo $row['ADDRESS'] . "\n";
-    echo $row['SALARY'] . "\n";
+// Créer les questions à partir des données JSON
+foreach ($questionsData as $questionData) {
+    $question = QuestionFactory::createQuestion(
+        $questionData['type'],
+        $questionData['name'],
+        $questionData['label'],
+        [
+            'choices' => $questionData['choices'] ?? [],
+            'required' => $questionData['required'] ?? false,
+            'defaultValue' => $questionData['defaultValue'] ?? ''
+        ]
+    );
+
+    $questions[] = $question;
 }
 
-$stmt=$pdo->prepare("SELECt * FROM COMPANY WHERE ID=?;");
+// Affichage des questions
+foreach ($questions as $question) {
+    echo $question;
+}
 
-$stmt->execute([1]);
-$company=$stmt->fetch();
-;
-
-echo "ID: " . $company['ID'] . ",nom: " . $company['NAME'] . ", age: " . $company['AGE'] . ", address: " . $company['ADDRESS'] . ", salary: " . $company['SALARY'] . "\n";
+?>
