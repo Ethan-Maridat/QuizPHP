@@ -10,14 +10,14 @@ DROP TABLE IF EXISTS QUIZZ;
 DROP TABLE IF EXISTS USER;
 
 CREATE TABLE QUIZZ (
-    quizz_id INT PRIMARY KEY AUTO_INCREMENT,
+    quizz_id INT PRIMARY KEY,
     quizz_name VARCHAR(50),
     quizz_description TEXT,
     quizz_difficulte INT
 );
 
 CREATE TABLE QUESTION (
-    question_id INT PRIMARY KEY AUTO_INCREMENT,
+    question_id INT PRIMARY KEY,
     question_text TEXT,
     type VARCHAR(50),
     score INT
@@ -32,7 +32,7 @@ CREATE TABLE QUESTION_QUIZZ (
 );
 
 CREATE TABLE ANSWER (
-    answer_id INT PRIMARY KEY AUTO_INCREMENT,
+    answer_id INT PRIMARY KEY,
     answer_text TEXT,
     question_id INT,
     est_valide BOOLEAN DEFAULT FALSE,
