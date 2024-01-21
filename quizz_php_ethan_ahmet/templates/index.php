@@ -38,7 +38,7 @@
                         <p>Score: {$score}</p>
                         <div class="quizz-selection-button">
                     EOL;                
-                if ($score != 0) {
+                if ($score >=0) {
                     echo '<p>Terminé</p>';
                 } else {
                     echo "<a href='quizz.php?id={$q->getId()}'>Jouer</a>";
