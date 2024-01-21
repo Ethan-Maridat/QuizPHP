@@ -17,10 +17,6 @@
     $__QUIZZ__ = new QuizzDB($cnx);
     $questions = $__QUIZZ__->getAllQuizz();
 
-    if (!isset($_SESSION['user'])) {
-        header("Location: /templates/login.php");
-        exit;
-    }
     $serializedUser = $_SESSION['user'];
     $loggedInUser = unserialize($serializedUser);
     echo htmlspecialchars($loggedInUser->getPseudo()) . '</p>';    
